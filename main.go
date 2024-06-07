@@ -10,4 +10,5 @@ func main() {
 
 	fmt.Println(algorithms.DynamicSolution(items, capacity))
 	fmt.Println(algorithms.GreedySolution(items, capacity))
+	fmt.Println(algorithms.BruteForceSolution(items, capacity))
 }

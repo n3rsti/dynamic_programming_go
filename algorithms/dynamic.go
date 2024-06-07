@@ -93,3 +93,49 @@ func GreedySolution(items []Item, W float64) ([]Item, float64) {
 
 	return result, value
 }
+
+func generateCombinations(n int) [][]int {
+	var combinations [][]int
+	total := 1 << n
+
+	for i := 0; i < total; i++ {
+		var combination []int
+		for j := 0; j < n; j++ {
+			if (i>>j)&1 == 1 {
+				combination = append(combination, 1)
+			} else {
+				combination = append(combination, 0)
+			}
+		}
+		combinations = append(combinations, combination)
+	}
+
+	return combinations
+}
+
+func BruteForceSolution(items []Item, capacity float64) ([]int, float64) {
+	n := len(items)
+	maxValue := 0.0
+	var bestCombination []int
+
+	combinations := generateCombinations(n)
+
+	for _, combination := range combinations {
+		totalValue := 0.0
+		totalWeight := 0.0
+
+		for i, include := range combination {
+			if include == 1 {
+				totalValue += items[i].Value
+				totalWeight += items[i].Weight
+			}
+		}
+
+		if totalWeight <= capacity && totalValue > maxValue {
+			maxValue = totalValue
+			bestCombination = combination
+		}
+	}
+
+	return bestCombination, maxValue
+}
